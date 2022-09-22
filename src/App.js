@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import React, { Component }  from 'react';
 import Home from './components/Home';
 import Post from './components/Post';
 import Profile_info from './components/Profile_info';
