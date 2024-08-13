@@ -4,7 +4,7 @@ const Profile = () => {
     return (
 <div className="container">
   <section className="stats">
-    <div className="stats__img-holder" style="background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/2053557/instagram-logo.png');">      
+  <div className="stats__img-holder" style={{ backgroundImage: "url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/2053557/instagram-logo.png')" }}>      
     </div>
     <div className="stats__data">
       <div className="stats__data__point">
