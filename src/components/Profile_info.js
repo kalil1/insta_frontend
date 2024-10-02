@@ -12,7 +12,7 @@ const Profile_info = () => {
         return <ProfileForm />;
       case 'settings':
         return <SettingsForm />;
-      // Add more cases as needed
+      
       default:
         return <ProfileForm />;
     }
@@ -29,7 +29,7 @@ const Profile_info = () => {
             <a href="#" className={`list-group-item list-group-item-action ${activeComponent === 'settings' ? 'active' : ''}`} onClick={() => setActiveComponent('settings')}>
               Settings
             </a>
-            {/* Add more links as needed */}
+            
           </div>
         </div>
         <div className="col-md-9">
