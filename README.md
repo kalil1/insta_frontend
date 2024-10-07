@@ -1,4 +1,4 @@
-# InstaClone Project
+## InstaClone Project
 
 This project consists of two main components:
 
