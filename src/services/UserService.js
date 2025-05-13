@@ -1,22 +1,23 @@
 import ApiService from './ApiService';
 
 export default class UserService {
-  static getUsers = async (filters) => ApiService.get('/users', filters);
+  static getUsers = async () => {
+    return ApiService.get('/users');
+  };
 
-  static getUser = async (userId) => ApiService.get(`/users/${userId}`);
+  static getUser = async (userId) => {
+    return ApiService.get(`/users/${userId}`);
+  };
 
-  static getUserRoles = async (userId) => ApiService.get(`/users/${userId}/roles`);
+  static searchUsers = async (searchTerm) => {
+    return ApiService.get(`/users/search?query=${searchTerm}`);
+  };
 
-  static createUser = async (user) => ApiService.post('/registration', user);
+  static getRecommendedUsers = async () => {
+    return ApiService.get('/users/recommended');
+  };
 
-  /**
-   * Update the account level roles for a user
-   *
-   * @param {string} userId
-   * @param {object{}} data
-   * @returns
-   */
-  static updateAccountPassword = async (userId, data) => ApiService.patch(`/users/${userId}/update-password`, data);
-
-  static updateAccountUser = async (userId, data) => ApiService.patch(`/users/${userId}`, data);
+  static updateProfile = async (userData) => {
+    return ApiService.put('/profiles', userData);
+  };
 }
