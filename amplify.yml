@@ -4,6 +4,7 @@ frontend:
     preBuild:
       commands:
         - npm install
+        - npm fund
         - npm ci 
     build:
       commands:
