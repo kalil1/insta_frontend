@@ -9,19 +9,28 @@ import Sidebar from './Sidebar';
 const Home = () => {
   const dispatch = useDispatch();
   const [posts, setPosts] = useState([]);
-  // const [users, setUsers] = useState([]); // State to hold user data
   const [recommended, setRecommended] = useState([]); // State to hold recommended user data
+  // const [users, setUsers] = useState([]); // State to hold user data
   const [stories, setStories] = useState([
-    { imageSrc: 'https://example.com/image1.jpg', text: 'Lorem.' },
-    { imageSrc: 'https://example.com/image2.jpg', text: 'Lorem.' },
-    // Add more stories as needed
+    { imageSrc: '/story-def.jpeg', text: 'Story 1' },
+    { imageSrc: '/story-def.jpeg', text: 'Story 2' },
+    { imageSrc: '/story-def.jpeg', text: 'Story 3' },
+        // Add more stories as needed
   ]);
 
   useEffect(() => {
     dispatch(getPosts()).then(response => {
-      setPosts(response.payload);
+      console.log('Post payload:', response.payload);
+  
+      if (Array.isArray(response.payload)) {
+        setPosts(response.payload); 
+      } else if (response.payload && Array.isArray(response.payload.posts)) {
+        setPosts(response.payload.posts); 
+      } else {
+        console.warn('Posts payload malformed:', response.payload);
+        setPosts([]);
+      }
     });
-
     // Fetch all users and set them to state
     // dispatch(getUsers()).then(response => {
     //   setUsers(response.payload);
@@ -29,7 +38,11 @@ const Home = () => {
 
     // Fetch recommended users and set them to state
     dispatch(recommendedUsers()).then(response => {
-      setRecommended(response.payload);
+      if (response.payload && Array.isArray(response.payload)) {
+        setRecommended(response.payload);
+      } else {
+        setRecommended([]);
+      }
     });
   }, [dispatch]);
 

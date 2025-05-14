@@ -28,13 +28,13 @@ const Post = ({post}) => {
         <span className="bold card-text">{post.likes} Likes</span>
         <span className="card-text"><span className="bold title-margin">{post.profile.name}</span>{post.caption}</span>
         <div className="comments-wrapper">
-          <ui className="comments">
+          <ul className="comments">
             {post.comments.map((x) => (
               <li className="active">
-                <strong>{x.profile.name}:</strong> {x.body}
+                <strong>{x.commenter_name}:</strong> {x.body}
               </li>
             ))}
-          </ui>
+          </ul>
         </div>
         <span className="card-text comments-btn">See more comments</span>
         <span className="card-time"></span>

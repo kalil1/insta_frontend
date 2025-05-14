@@ -24,7 +24,7 @@ const Sidebar = ({ users }) => {
         {users.map((user) => (
           <div key={user.id} className="sidebar-card sidebar-card-alt grid">
             <img
-              src={user.profileImage || 'https://example.com/default-user.jpg'}
+              src={user.profileImage || '/no_avatar.png'}
               alt=""
               className="sidebar-img side-bar-img-alt"
             />
