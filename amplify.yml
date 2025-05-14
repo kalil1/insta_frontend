@@ -3,6 +3,7 @@ frontend:
   phases:
     preBuild:
       commands:
+        - export NODE_OPTIONS=--openssl-legacy-provider
         - npm install
     build:
       commands:
