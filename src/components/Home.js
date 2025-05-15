@@ -12,9 +12,9 @@ const Home = () => {
   const [recommended, setRecommended] = useState([]); // State to hold recommended user data
   // const [users, setUsers] = useState([]); // State to hold user data
   const [stories, setStories] = useState([
-    { imageSrc: '/story-def.jpeg', text: 'Story 1' },
-    { imageSrc: '/story-def.jpeg', text: 'Story 2' },
-    { imageSrc: '/story-def.jpeg', text: 'Story 3' },
+    { imageSrc: '/story-def.jpg', text: 'Story 1' },
+    { imageSrc: '/story-def.jpg', text: 'Story 2' },
+    { imageSrc: '/story-def.jpg', text: 'Story 3' },
         // Add more stories as needed
   ]);
 
