@@ -12,7 +12,7 @@ const Post = ({post}) => {
           {post.profile.name}
         </span>
           
-         <span className="card-subtitle">Lorem, ipsum.</span>
+         <span className="card-subtitle">{post.profile.bio }</span>
         <div className="card-opt-btn flex-container"><i className="bi bi-three-dots"></i></div>
       </div>
       <div className="card-img-container">
@@ -25,7 +25,7 @@ const Post = ({post}) => {
         <span className="card-icon card-icon-left"><i className="bi bi-send"></i></span>
         <span className="card-icon card-icon-right"><i className="bi bi-bookmark"></i></span>
         </div>
-        <span className="bold card-text">{post.likes} Likes</span>
+        <span className="bold card-text">Likes: {post.likes} Comments: {post.comments.length}</span>
         <span className="card-text"><span className="bold title-margin">{post.profile.name}</span>{post.caption}</span>
         <div className="comments-wrapper">
           <ul className="comments">

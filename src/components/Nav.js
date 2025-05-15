@@ -30,7 +30,7 @@ const Nav = () => {
                             </NavLink>
                         </li>
                         <li className="navbar-item">
-                            <NavLink to="/post">
+                            <NavLink to="/posts">
                                 Post<i className="bi bi-send"></i>
                             </NavLink>
                         </li>
@@ -39,11 +39,11 @@ const Nav = () => {
                                 Form<i className="bi bi-plus-square"></i>
                             </NavLink>
                         </li>
-                        <li className="navbar-item">
+                        {/* <li className="navbar-item">
                             <NavLink to="/stories">
                                 Stories<i className="bi bi-compass"></i>
                             </NavLink>
-                        </li>
+                        </li> */}
                         <li className="navbar-item">
                             <NavLink to="/profile">
                               <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="" />

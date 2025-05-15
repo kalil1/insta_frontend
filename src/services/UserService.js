@@ -14,10 +14,10 @@ export default class UserService {
   };
 
   static getRecommendedUsers = async () => {
-    return ApiService.get('/users/recommended');
+    return ApiService.get('/profiles');
   };
 
   static updateProfile = async (userData) => {
-    return ApiService.put('/profiles', userData);
+    return ApiService.put('/profiles/update', userData);
   };
 }
