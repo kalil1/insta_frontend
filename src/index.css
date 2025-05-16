@@ -207,7 +207,9 @@ header{
   border-radius: 8px;
   align-items: center;
   gap: 2rem;
-  overflow:hidden;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
   
 }
 .pop{

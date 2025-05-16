@@ -1,93 +1,152 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { updateProfile } from '../redux/userSlice';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const ProfileForm = () => {
-  const dispatch = useDispatch();
+  const { id: userId } = useParams();
   const [formData, setFormData] = useState({
-    username: '',
-    first_name: '',
-    last_name: '',
-    nickname: '',
-    email: '',
+    name: '',
     website: '',
-    public_info: '',
-    password: ''
+    bio: '',
+    phone: '',
+    profile_pic: '', 
   });
+  const [fileInput, setFileInput] = useState(null);
+  const [originalPic, setOriginalPic] = useState(''); 
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/profiles/${userId}`);
+        if (response.data?.profile) {
+          const { name, website, bio, phone, profile_pic } = response.data.profile;
+          setFormData({ name, website, bio, phone, profile_pic });
+          setOriginalPic(profile_pic);
+        }
+      } catch (error) {
+        console.error('Failed to fetch profile:', error);
+      }
+    };
+
+    fetchProfile();
+  }, [userId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleFileChange = (e) => {
+    if (e.target.files[0]) {
+      setFileInput(e.target.files[0]);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(updateProfile(formData));
+
+    try {
+      let profilePicUrl = formData.profile_pic;
+
+      if (fileInput && profilePicUrl !== originalPic) {
+        const presignRes = await axios.post(`${process.env.REACT_APP_API_URL}/generate_presigned_url`, {
+          filename: fileInput.name,
+          contentType: fileInput.type,
+        });
+
+        const { url, key } = presignRes.data;
+
+        await axios.put(url, fileInput, {
+          headers: {
+            'Content-Type': fileInput.type,
+          },
+        });
+
+        profilePicUrl = `${process.env.REACT_APP_S3_BASE_URL}/${key}`;
+      }
+
+      const updatedProfile = {
+        ...formData,
+        profile_pic: profilePicUrl,
+      };
+
+      await axios.put(`${process.env.REACT_APP_API_URL}/profiles/${userId}`, updatedProfile);
+      alert('Profile updated successfully!');
+    } catch (error) {
+      console.error('Profile update failed:', error);
+      alert('Something went wrong. Please try again.');
+    }
   };
 
   return (
     <div className="card">
-        <div className="card-body">
+      <div className="card-body">
         <form onSubmit={handleSubmit}>
-        <div className="form-group row">
-            <label htmlFor="username" className="col-4 col-form-label">User Name*</label>
-            <div className="col-8">
-            <input id="username" name="username" placeholder="Username" className="form-control here" required type="text" value={formData.username} onChange={handleChange} />
+          {['name', 'website', 'phone'].map(field => (
+            <div className="form-group row" key={field}>
+              <label htmlFor={field} className="col-4 col-form-label text-capitalize">
+                {field.replace('_', ' ')}
+              </label>
+              <div className="col-8">
+                <input
+                  id={field}
+                  name={field}
+                  className="form-control here"
+                  type="text"
+                  value={formData[field]}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
-        </div>
-        <div className="form-group row">
-            <label htmlFor="first_name" className="col-4 col-form-label">First Name</label>
+          ))}
+
+          <div className="form-group row">
+            <label htmlFor="bio" className="col-4 col-form-label">Bio</label>
             <div className="col-8">
-            <input id="first_name" name="first_name" placeholder="First Name" className="form-control here" type="text" value={formData.first_name} onChange={handleChange} />
+              <textarea
+                id="bio"
+                name="bio"
+                className="form-control"
+                rows="4"
+                value={formData.bio}
+                onChange={handleChange}
+              />
             </div>
-        </div>
-        <div className="form-group row">
-            <label htmlFor="last_name" className="col-4 col-form-label">Last Name</label>
+          </div>
+
+          <div className="form-group row">
+            <label htmlFor="profile_pic" className="col-4 col-form-label">Profile Picture</label>
             <div className="col-8">
-            <input id="last_name" name="last_name" placeholder="Last Name" className="form-control here" type="text" value={formData.last_name} onChange={handleChange} />
+              <input
+                type="file"
+                accept="image/*"
+                className="form-control-file"
+                onChange={handleFileChange}
+              />
+              {formData.profile_pic && (
+                <img
+                  src={formData.profile_pic}
+                  alt="Current"
+                  className="mt-2"
+                  style={{ maxWidth: '150px', display: 'block' }}
+                />
+              )}
             </div>
-        </div>
-        <div className="form-group row">
-            <label htmlFor="nickname" className="col-4 col-form-label">Nick Name*</label>
-            <div className="col-8">
-            <input id="nickname" name="nickname" placeholder="Nick Name" className="form-control here" required type="text" value={formData.nickname} onChange={handleChange} />
-            </div>
-        </div>
-        <div className="form-group row">
-            <label htmlFor="email" className="col-4 col-form-label">Email*</label>
-            <div className="col-8">
-            <input id="email" name="email" placeholder="Email" className="form-control here" required type="text" value={formData.email} onChange={handleChange} />
-            </div>
-        </div>
-        <div className="form-group row">
-            <label htmlFor="website" className="col-4 col-form-label">Website</label>
-            <div className="col-8">
-            <input id="website" name="website" placeholder="website" className="form-control here" type="text" value={formData.website} onChange={handleChange} />
-            </div>
-        </div>
-        <div className="form-group row">
-            <label htmlFor="public_info" className="col-4 col-form-label">Public Info</label>
-            <div className="col-8">
-            <textarea id="public_info" name="public_info" cols="40" rows="4" className="form-control" value={formData.public_info} onChange={handleChange}></textarea>
-            </div>
-        </div>
-        <div className="form-group row">
-            <label htmlFor="password" className="col-4 col-form-label">New Password</label>
-            <div className="col-8">
-            <input id="password" name="password" placeholder="New Password" className="form-control here" type="password" value={formData.password} onChange={handleChange} />
-            </div>
-        </div>
-        <div className="form-group row">
+          </div>
+
+          <div className="form-group row">
             <div className="offset-4 col-8">
-            <button name="submit" type="submit" className="btn btn-primary">Update My Profile</button>
+              <button type="submit" className="btn btn-primary">
+                Update My Profile
+              </button>
             </div>
-        </div>
+          </div>
         </form>
+      </div>
     </div>
-</div>
   );
 };
 

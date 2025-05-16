@@ -1,21 +1,23 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from './Profile.module.css';
 
-function Profile({ userId }) {
+function Profile() {
   const [profileData, setProfileData] = useState(null);
   const [posts, setPosts] = useState([]);
+  const { id: userId } = useParams();
+
 
   useEffect(() => {
-    const id = userId || Math.floor(Math.random() * 100) + 1;
+    const id = (!isNaN(userId) && Number(userId) > 0) ? Number(userId) : Math.floor(Math.random() * 100) + 1;
     getProfile(id);
   }, [userId]);
 
   // profile link is broken on purpose untill all features are complete 
   const getProfile = async (id) => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${id}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/profiles/${id}`);
       if (response.data && response.data.profile) {
         setProfileData(response.data.profile);
         setPosts(response.data.posts);
@@ -33,8 +35,8 @@ function Profile({ userId }) {
     username: "areal_alien"
   };
 
-  const user = profileData || fallbackProfile;
-
+  const profile = profileData || fallbackProfile;
+  console.log(profile)
   return (
     <div className={styles["profile-wrapper"]}>
       <div>
@@ -44,7 +46,7 @@ function Profile({ userId }) {
               <div className={styles["uh-image"]}>
                 <img
                   className={styles["uh-image-inner"]}
-                  src={user.profile_pic?.url?.startsWith("/") ? process.env.REACT_APP_API_URL + user.profile_pic.url : user.profile_pic.url}
+                  src={profile.profile_pic?.url?.startsWith("/") ? process.env.REACT_APP_API_URL + profile.profile_pic.url : profile.profile_pic.url}
                   alt="Profile"
                 />
                 <div className={styles.gradient}></div>
@@ -52,10 +54,12 @@ function Profile({ userId }) {
             </div>
             <div className={styles["uh-right"]}>
               <div className={styles["user-info"]}>
-                <h3>{user.username || user.name}</h3>
-                <NavLink to="/form">
-                <button className={styles.btn}>Edit Profile</button>
-                </NavLink>
+                <h3>{profile.name}</h3>
+                {profile.id && (
+                  <NavLink to={`/form/${profile.id}`}>
+                    <button className={styles.btn}>Edit Profile</button>
+                  </NavLink>
+                )}
               </div>
               <div className={styles["user-links"]}>
                 <a href="#"><span>{posts.length || "2.1k"}</span> Posts</a>
@@ -63,9 +67,9 @@ function Profile({ userId }) {
                 <a href="#">Following <span>388</span></a>
               </div>
               <div className={styles["user-bio"]}>
-                <p className={styles["user-bio-name"]}>{user.name}</p>
+                <p className={styles["user-bio-name"]}>{profile.name}</p>
                 <br />
-                <p>{user.bio}</p>
+                <p>{profile.bio}</p>
               </div>
             </div>
           </div>

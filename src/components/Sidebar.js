@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Sidebar = ({ users }) => {
   // Limit to 10 profiles
@@ -8,7 +9,7 @@ const Sidebar = ({ users }) => {
     if (!bio) return '';
     return bio.length > 45 ? bio.substring(0, 45) + '...' : bio;
   };
-
+    
   return (
     <div className="sidebar">
       <div className="sidebar-menu-container">
@@ -21,7 +22,9 @@ const Sidebar = ({ users }) => {
             />
             <span className="sidebar-title card-title">{randomProfile.name}</span>
             <span className="card-subtitle sidebar-subtitle">{truncateBio(randomProfile.bio)}</span>
-            <span className="sidebar-btn">Change</span>
+            <NavLink to={`/profiles/${randomProfile.id}`}>
+              <span className="sidebar-btn">Show</span>
+            </NavLink>
           </div>
         )}
         <div className="suggestions-header grid">
@@ -40,7 +43,9 @@ const Sidebar = ({ users }) => {
             <span className="card-subtitle sidebar-subtitle sidebar-subtitle-alt">
               {truncateBio(profile.bio)}
             </span>
-            <span className="sidebar-btn">Follow</span>
+            <NavLink to={`/profiles/${profile.id}`}>
+              <span className="sidebar-btn">Show</span>
+            </NavLink>
           </div>
         ))}
       </div>
