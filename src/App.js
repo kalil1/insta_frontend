@@ -15,9 +15,10 @@ function App() {
         <Routes>
           <Route path="/posts" element={<Posts />} />
           <Route path="/stories" element={<Stories />} />
-          <Route path="/form" element={<Profile_info />} />
+          <Route path="/form/:id" element={<Profile_info />} />
           {/* <Route path="/new_post" element={<NewPost />} /> */}
-          <Route path="/profile" element={<Profile />} />
+          {/* <Route path="/profile" element={<Profile />} /> */}
+          <Route path="/profiles/:id" element={<Profile />} />
           <Route path="/" element={<Home />} />
         </Routes>
       </div>
