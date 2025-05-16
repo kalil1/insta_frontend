@@ -31,7 +31,7 @@ const Nav = () => {
                         </li>
                         <li className="navbar-item">
                             <NavLink to="/posts">
-                                Post<i className="bi bi-send"></i>
+                            Explore Page<i className="bi bi-send"></i>
                             </NavLink>
                         </li>
                         <li className="navbar-item">
