@@ -15,6 +15,10 @@ const Home = () => {
     { imageSrc: '/story-def.jpg', text: 'Story 1' },
     { imageSrc: '/story-def.jpg', text: 'Story 2' },
     { imageSrc: '/story-def.jpg', text: 'Story 3' },
+    { imageSrc: '/story-def.jpg', text: 'Story 4' },
+    { imageSrc: '/story-def.jpg', text: 'Story 5' },
+    { imageSrc: '/story-def.jpg', text: 'Story 6' },
+    { imageSrc: '/story-def.jpg', text: 'Story 7' },
         // Add more stories as needed
   ]);
 

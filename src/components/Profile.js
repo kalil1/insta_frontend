@@ -1,120 +1,134 @@
-import React from 'react'
+import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import styles from './Profile.module.css';
 
-const Profile = () => {
-    return (
-<div className="container">
-  <section className="stats">
-  <div className="stats__img-holder" style={{ backgroundImage: "url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/2053557/instagram-logo.png')" }}>      
-    </div>
-    <div className="stats__data">
-      <div className="stats__data__point">
-        <div className="stats__data__point__value">6,126</div>
-        <div className="stats__data__point__description">Posts</div>
-      </div>
-      <div className="stats__data__point">
-        <div className="stats__data__point__value">317 M</div>
-        <div className="stats__data__point__description">Followers</div>
-      </div>
-      <div className="stats__data__point">
-        <div className="stats__data__point__value">225</div>
-        <div className="stats__data__point__description">Following</div>
-      </div>
-    </div>      
-  </section>
-  <section className="description">
-    <h2 className="decription__title">Instagram</h2>
-    <p>
-      Bringing you closer to the people and things you love. ❤️
-    </p>
-    <a href="https://www.antibullyingpro.com/resources">www.antibullyingpro.com/resources</a>
-  </section>
-  <section className="actions">
-    <button className="actions__btn actions__btn--active">Follow</button>
-    <button className="actions__btn">Message</button>
-    <button className="actions__btn actions__btn--icon"><i className="material-icons">keyboard_arrow_down</i></button>
-  </section>
-  <section className="stories">
-    <div className="stories__single">
-      <div className="stories__single__img-holder">
-        <div className="stories__single__img-holder__inner" style="background-image: url('https://images.unsplash.com/photo-1431512284068-4c4002298068?ixlib=rb-1.2.1&dpr=1&auto=format&fit=crop&w=416&h=312&q=60');"></div>
-      </div>
-      <p className="stories__single__description">Game On</p>
-    </div>
-    <div className="stories__single">
-      <div className="stories__single__img-holder">
-        <div className="stories__single__img-holder__inner" style="background-image: url('https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></div>
-      </div>
-      <p className="stories__single__description">Take a Stand</p>
-    </div>
-    <div className="stories__single">
-      <div className="stories__single__img-holder">
-        <div className="stories__single__img-holder__inner" style="background-image: url('https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></div>
-      </div>
-      <p className="stories__single__description">You got this</p>
-    </div>
-        <div className="stories__single">
-      <div className="stories__single__img-holder">
-        <div className="stories__single__img-holder__inner" style="background-image: url('https://images.unsplash.com/photo-1518495973542-4542c06a5843?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></div>
-      </div>
-      <p className="stories__single__description">#skater girl</p>
-    </div>
-      <div className="stories__single">
-      <div className="stories__single__img-holder">
-        <div className="stories__single__img-holder__inner" style="background-image: url('https://images.unsplash.com/photo-1474524955719-b9f87c50ce47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></div>
-      </div>
-      <p className="stories__single__description">Game On</p>
-    </div>
-    <div className="stories__single">
-      <div className="stories__single__img-holder">
-        <div className="stories__single__img-holder__inner" style="background-image: url('https://images.unsplash.com/photo-1504700610630-ac6aba3536d3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></div>
-      </div>
-      <p className="stories__single__description">Take a Stand</p>
-    </div>
-    <div className="stories__single">
-      <div className="stories__single__img-holder">
-        <div className="stories__single__img-holder__inner" style="background-image: url('https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></div>
-      </div>
-      <p className="stories__single__description">You got this</p>
-    </div>
-        <div className="stories__single">
-      <div className="stories__single__img-holder">
-        <div className="stories__single__img-holder__inner" style="background-image: url('https://images.unsplash.com/photo-1518144591331-17a5dd71c477?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></div>
-      </div>
-      <p className="stories__single__description">#skater girl</p>
-    </div>
-  </section>
-  <section className="grid">
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1548032885-b5e38734688a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1508138221679-760a23a2285b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1501426026826-31c667bdf23d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1507041957456-9c397ce39c97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1519821172144-4f87d85de2a1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1509233725247-49e657c54213?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1505142468610-359e7d316be0?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1520454974749-611b7248ffdb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1414609245224-afa02bfb3fda?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1504681869696-d977211a5f4c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1522083165195-3424ed129620?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1500916434205-0c77489c6cf7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1470219556762-1771e7f9427d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1523374228107-6e44bd2b524e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1516893842880-5d8aada7ac05?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1505761671935-60b3a7427bad?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1539108826694-1297410cdda9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1529690982439-df5e60eb5a3f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1491056792553-4704d261e3ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1562138888-3d0a63b21dcf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1568641134257-ab85695f67e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1545385095-f5a14a9160d1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1547462713-a208daf9d997?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>
-    <a href="" className="grid__photo" style="background-image: url('https://images.unsplash.com/photo-1522586217274-9096ee38a805?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');"></a>  
-  </section>
-</div>
+function Profile({ userId }) {
+  const [profileData, setProfileData] = useState(null);
+  const [posts, setPosts] = useState([]);
 
-    )
+  useEffect(() => {
+    const id = userId || Math.floor(Math.random() * 100) + 1;
+    getProfile(id);
+  }, [userId]);
+
+  // profile link is broken on purpose untill all features are complete 
+  const getProfile = async (id) => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/profile/${id}`);
+      if (response.data && response.data.profile) {
+        setProfileData(response.data.profile);
+        setPosts(response.data.posts);
+      }
+    } catch (error) {
+      console.error("Failed to fetch profile:", error);
+    }
+  };
+
+  const fallbackProfile = {
+    name: "Areal Alien",
+    bio: "This is the user biography 😄\nIt also has another line.",
+    profile_pic: { url: "https://i.imgur.com/Qv1WDJq.jpg" },
+    website: "#",
+    username: "areal_alien"
+  };
+
+  const user = profileData || fallbackProfile;
+
+  return (
+    <div className={styles["profile-wrapper"]}>
+      <div>
+        <div className={styles["user-header-wrapper"]}>
+          <div className={styles["user-header-inner"]}>
+            <div className={styles["uh-left"]}>
+              <div className={styles["uh-image"]}>
+                <img
+                  className={styles["uh-image-inner"]}
+                  src={user.profile_pic?.url?.startsWith("/") ? process.env.REACT_APP_API_URL + user.profile_pic.url : user.profile_pic.url}
+                  alt="Profile"
+                />
+                <div className={styles.gradient}></div>
+              </div>
+            </div>
+            <div className={styles["uh-right"]}>
+              <div className={styles["user-info"]}>
+                <h3>{user.username || user.name}</h3>
+                <NavLink to="/form">
+                <button className={styles.btn}>Edit Profile</button>
+                </NavLink>
+              </div>
+              <div className={styles["user-links"]}>
+                <a href="#"><span>{posts.length || "2.1k"}</span> Posts</a>
+                <a href="#"><span>421k</span> Followers</a>
+                <a href="#">Following <span>388</span></a>
+              </div>
+              <div className={styles["user-bio"]}>
+                <p className={styles["user-bio-name"]}>{user.name}</p>
+                <br />
+                <p>{user.bio}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles["user-page-wrapper"]}>
+          <div className={styles["user-page-inner"]}>
+            {posts.length > 0 ? (
+              posts.map((post) => (
+                <div key={post.id} className={styles["image-wrapper"]}>
+                  <div className={styles["img-overlay-wrapper"]}>
+                    <div className={styles["img-btns"]}>
+                      <p>
+                        {/* Placeholder likes/comments until backend sends those */}
+                        465<i className="uil uil-heart-alt"></i> &nbsp;&nbsp;
+                        25<i className="uil uil-comment"></i>
+                      </p>
+                    </div>
+                    <div className={styles["img-overlay"]}></div>
+                  </div>
+                  <img
+                    className={styles.image}
+                    src={
+                      post.post_img?.url?.startsWith("/")
+                        ? process.env.REACT_APP_API_URL + post.post_img.url
+                        : post.post_img?.url || "/fallbacks/fallback1.jpg"
+                    }
+                    alt={post.caption || "Post"}
+                  />
+                </div>
+              ))
+            ) : (
+              [...Array(9)].map((_, index) => {
+                const fallbackImage = "/fallbacks/fallback" + (Math.floor(Math.random() * 10) + 1) + ".jpg";
+                return (
+                  <div key={index} className={styles["image-wrapper"]}>
+                    <div className={styles["img-overlay-wrapper"]}>
+                      <div className={styles["img-btns"]}>
+                        <p>
+                          465<i className="uil uil-heart-alt"></i> &nbsp;&nbsp;
+                          25<i className="uil uil-comment"></i>
+                        </p>
+                      </div>
+                      <div className={styles["img-overlay"]}></div>
+                    </div>
+                    <img className={styles.image} src={fallbackImage} alt="Fallback post" />
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </div>
+
+        <div className={styles["user-loader"]}>
+          <div className={styles.loader}>
+            <svg className={styles.circular} viewBox="25 25 50 50">
+              <circle className={styles.path} cx="50" cy="50" r="20" fill="none" strokeWidth="2" strokeMiterlimit="10" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default Profile
+export default Profile;
