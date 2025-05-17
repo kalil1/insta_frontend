@@ -9,10 +9,11 @@ const ProfileForm = () => {
     website: '',
     bio: '',
     phone: '',
-    profile_pic: '', 
+    profile_pic: '',
   });
   const [fileInput, setFileInput] = useState(null);
-  const [originalPic, setOriginalPic] = useState(''); 
+  const [originalPic, setOriginalPic] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -25,6 +26,7 @@ const ProfileForm = () => {
         }
       } catch (error) {
         console.error('Failed to fetch profile:', error);
+        alert('Failed to load profile. Please refresh or try again later.');
       }
     };
 
@@ -40,32 +42,44 @@ const ProfileForm = () => {
   };
 
   const handleFileChange = (e) => {
-    if (e.target.files[0]) {
-      setFileInput(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        alert('Only image files are allowed.');
+        return;
+      }
+
+      setFileInput(file);
+      setFormData(prev => ({
+        ...prev,
+        profile_pic: URL.createObjectURL(file), // temporary preview
+      }));
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       let profilePicUrl = formData.profile_pic;
 
-      if (fileInput && profilePicUrl !== originalPic) {
-        const presignRes = await axios.post(`${process.env.REACT_APP_API_URL}/generate_presigned_url`, {
-          filename: fileInput.name,
-          contentType: fileInput.type,
-        });
+      if (fileInput) {
+        // Upload file directly to backend
+        const uploadForm = new FormData();
+        uploadForm.append('file', fileInput);
 
-        const { url, key } = presignRes.data;
+        const uploadRes = await axios.post(
+          `${process.env.REACT_APP_API_URL}/generate_presigned_url`,
+          uploadForm,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
 
-        await axios.put(url, fileInput, {
-          headers: {
-            'Content-Type': fileInput.type,
-          },
-        });
-
-        profilePicUrl = `${process.env.REACT_APP_S3_BASE_URL}/${key}`;
+        profilePicUrl = uploadRes.data.url;
       }
 
       const updatedProfile = {
@@ -74,10 +88,13 @@ const ProfileForm = () => {
       };
 
       await axios.put(`${process.env.REACT_APP_API_URL}/profiles/${userId}`, updatedProfile);
+
       alert('Profile updated successfully!');
     } catch (error) {
       console.error('Profile update failed:', error);
-      alert('Something went wrong. Please try again.');
+      alert('Something went wrong while updating the profile. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -98,6 +115,7 @@ const ProfileForm = () => {
                   type="text"
                   value={formData[field]}
                   onChange={handleChange}
+                  disabled={loading}
                 />
               </div>
             </div>
@@ -113,6 +131,7 @@ const ProfileForm = () => {
                 rows="4"
                 value={formData.bio}
                 onChange={handleChange}
+                disabled={loading}
               />
             </div>
           </div>
@@ -125,11 +144,12 @@ const ProfileForm = () => {
                 accept="image/*"
                 className="form-control-file"
                 onChange={handleFileChange}
+                disabled={loading}
               />
               {formData.profile_pic && (
                 <img
                   src={formData.profile_pic}
-                  alt="Current"
+                  alt="Preview"
                   className="mt-2"
                   style={{ maxWidth: '150px', display: 'block' }}
                 />
@@ -139,8 +159,8 @@ const ProfileForm = () => {
 
           <div className="form-group row">
             <div className="offset-4 col-8">
-              <button type="submit" className="btn btn-primary">
-                Update My Profile
+              <button type="submit" className="btn btn-primary" disabled={loading}>
+                {loading ? 'Updating...' : 'Update My Profile'}
               </button>
             </div>
           </div>
