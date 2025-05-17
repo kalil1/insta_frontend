@@ -46,7 +46,7 @@ function Profile() {
               <div className={styles["uh-image"]}>
                 <img
                   className={styles["uh-image-inner"]}
-                  src={profile.profile_pic?.url?.startsWith("/") ? process.env.REACT_APP_API_URL + profile.profile_pic.url : profile.profile_pic.url}
+                  src={profile.profile_pic}
                   alt="Profile"
                 />
                 <div className={styles.gradient}></div>
