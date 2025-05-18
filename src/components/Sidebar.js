@@ -35,7 +35,7 @@ const Sidebar = ({ users }) => {
         {displayedProfiles.map((profile) => (
           <div key={profile.id} className="sidebar-card sidebar-card-alt grid">
             <img
-              src={profile.profileImage || '/no_avatar.png'}
+              src={profile.profile_pic || '/no_avatar.png'}
               alt=""
               className="sidebar-img side-bar-img-alt"
             />
