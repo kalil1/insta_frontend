@@ -6,7 +6,7 @@ const Post = ({post}) => {
     <div className="card-wrapper flex-container">
       <div className="card-header grid">
         <div className="header-img-container flex-container">
-          <img className="card-header-img" src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt=""/>
+          <img className="card-header-img" src={post.profile.profile_pic} alt=""/>
         </div>
         <span className="card-title">
           {post.profile.name}
@@ -16,7 +16,7 @@ const Post = ({post}) => {
         <div className="card-opt-btn flex-container"><i className="bi bi-three-dots"></i></div>
       </div>
       <div className="card-img-container">
-        <img className="card-img" src="https://images.unsplash.com/photo-1587502624372-45627391a31f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80" alt=""/>
+        <img className="card-img" src={post.post_img} alt=""/>
       </div>
       <div className="card-data flex-container">
         <div className="card-icons flex-container"> 
