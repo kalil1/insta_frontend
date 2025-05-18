@@ -21,7 +21,6 @@ export default class PostService {
         longitude,
       },
     };
-    console.log(mappedData)
     return ApiService.post('/posts', mappedData);
   };
 
