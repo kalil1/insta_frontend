@@ -36,7 +36,7 @@ function Profile() {
   };
 
   const profile = profileData || fallbackProfile;
-  console.log(profile)
+  
   return (
     <div className={styles["profile-wrapper"]}>
       <div>
@@ -93,9 +93,7 @@ function Profile() {
                   <img
                     className={styles.image}
                     src={
-                      post.post_img?.url?.startsWith("/")
-                        ? process.env.REACT_APP_API_URL + post.post_img.url
-                        : post.post_img?.url || "/fallbacks/fallback1.jpg"
+                      post.post_img || "/fallbacks/fallback1.jpg"
                     }
                     alt={post.caption || "Post"}
                   />
