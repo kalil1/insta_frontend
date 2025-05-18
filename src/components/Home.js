@@ -24,7 +24,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getPosts()).then(response => {
-      console.log('Post payload:', response.payload);
+      // console.log('Post payload:', response.payload);
   
       if (Array.isArray(response.payload)) {
         setPosts(response.payload); 
