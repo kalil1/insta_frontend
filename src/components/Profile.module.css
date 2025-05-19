@@ -45,6 +45,39 @@ body {
   -webkit-font-smoothing: antialiased;
   background-color: var(--light-mode-brig);
 }
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background-color: white;
+  padding: 20px;
+  max-width: 800px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  position: relative;
+}
+
+.closeButton {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
 /* Classes */
 .space {
   margin: 1em 0;
