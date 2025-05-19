@@ -1,4 +1,5 @@
 import { NavLink, useParams } from 'react-router-dom';
+import PostModal from './PostModal'; 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from './Profile.module.css';
@@ -7,7 +8,7 @@ function Profile() {
   const [profileData, setProfileData] = useState(null);
   const [posts, setPosts] = useState([]);
   const { id: userId } = useParams();
-
+  const [selectedPost, setSelectedPost] = useState(null);
 
   useEffect(() => {
     const id = (!isNaN(userId) && Number(userId) > 0) ? Number(userId) : Math.floor(Math.random() * 100) + 1;
@@ -25,6 +26,14 @@ function Profile() {
     } catch (error) {
       console.error("Failed to fetch profile:", error);
     }
+  };
+
+  const handleImageClick = (post) => {
+    setSelectedPost(post);
+  };
+
+  const closeModal = () => {
+    setSelectedPost(null);
   };
 
   const fallbackProfile = {
@@ -79,11 +88,10 @@ function Profile() {
           <div className={styles["user-page-inner"]}>
             {posts.length > 0 ? (
               posts.map((post) => (
-                <div key={post.id} className={styles["image-wrapper"]}>
+                <div key={post.id} className={styles["image-wrapper"]} onClick={() => handleImageClick(post)}>
                   <div className={styles["img-overlay-wrapper"]}>
                     <div className={styles["img-btns"]}>
                       <p>
-                        {/* Placeholder likes/comments until backend sends those */}
                         465<i className="uil uil-heart-alt"></i> &nbsp;&nbsp;
                         25<i className="uil uil-comment"></i>
                       </p>
@@ -92,9 +100,7 @@ function Profile() {
                   </div>
                   <img
                     className={styles.image}
-                    src={
-                      post.post_img || "/fallbacks/fallback1.jpg"
-                    }
+                    src={post.post_img || "/fallbacks/fallback1.jpg"}
                     alt={post.caption || "Post"}
                   />
                 </div>
@@ -129,6 +135,7 @@ function Profile() {
           </div>
         </div>
       </div>
+      <PostModal post={selectedPost} onClose={closeModal} />
     </div>
   );
 }

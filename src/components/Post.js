@@ -1,56 +1,63 @@
 import React from "react";
 
-const Post = ({post}) => {
+const Post = ({ post }) => {
+  if (!post || !post.profile) {
+    return <div>Loading...</div>; // or return nothing/null
+  }
+
   return (
-        
-    <div className="card-wrapper flex-container">
+    <div className="post-card flex-container">
       <div className="card-header grid">
         <div className="header-img-container flex-container">
-          <img className="card-header-img" src={post.profile.profile_pic} alt=""/>
+          <img className="card-header-img" src={post.profile.profile_pic} alt="Profile" />
         </div>
-        <span className="card-title">
-          {post.profile.name}
-        </span>
-          
-         <span className="card-subtitle">{post.profile.bio }</span>
+        <span className="card-title">{post.profile.name}</span>
+        <span className="card-subtitle">{post.profile.bio}</span>
         <div className="card-opt-btn flex-container"><i className="bi bi-three-dots"></i></div>
       </div>
+
       <div className="card-img-container">
-        <img className="card-img" src={post.post_img} alt=""/>
+        <img className="card-img" src={post.post_img} alt="Post" />
       </div>
+
       <div className="card-data flex-container">
-        <div className="card-icons flex-container"> 
-        <span className="card-icon card-icon-left"><i className="bi bi-heart"></i></span>
-        <span className="card-icon card-icon-left"><i className="bi bi-chat"></i></span>
-        <span className="card-icon card-icon-left"><i className="bi bi-send"></i></span>
-        <span className="card-icon card-icon-right"><i className="bi bi-bookmark"></i></span>
+        <div className="card-icons flex-container">
+          <span className="card-icon card-icon-left"><i className="bi bi-heart"></i></span>
+          <span className="card-icon card-icon-left"><i className="bi bi-chat"></i></span>
+          <span className="card-icon card-icon-left"><i className="bi bi-send"></i></span>
+          <span className="card-icon card-icon-right"><i className="bi bi-bookmark"></i></span>
         </div>
-        <span className="bold card-text">Likes: {post.likes} Comments: {post.comments.length}</span>
-        <span className="card-text"><span className="bold title-margin">{post.profile.name}</span>{post.caption}</span>
+
+        <span className="bold card-text">
+          Likes: {post.likes} Comments: {post.comments?.length || 0}
+        </span>
+
+        <span className="card-text">
+          <span className="bold title-margin">{post.profile.name}</span> {post.caption}
+        </span>
+
         <div className="comments-wrapper">
           <ul className="comments">
-            {post.comments.map((x) => (
-              <li className="active">
+            {post.comments?.map((x, idx) => (
+              <li className="active" key={idx}>
                 <strong>{x.commenter_name}:</strong> {x.body}
               </li>
             ))}
           </ul>
         </div>
+
         <span className="card-text comments-btn">See more comments</span>
         <span className="card-time"></span>
+
         <div className="add-comment-container flex-container">
           <span className="card-icon"><i className="bi bi-emoji-smile"></i></span>
           <div className="comment-container">
-            <input className="comment-input" type="text" placeholder="Add a comment...."/>
+            <input className="comment-input" type="text" placeholder="Add a comment...." />
           </div>
-          
-          <a href="#" className="publish" >Publish</a>
+          <a href="#" className="publish">Publish</a>
         </div>
-        
       </div>
-  
     </div>
-    
   );
 };
 
