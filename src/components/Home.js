@@ -62,7 +62,7 @@ const Home = () => {
         
         {/* Posts section */}
         <div className="card-wrapper flex-container">
-          <div className="whtsmk">
+          <div className="posts-container flex-container">
             {posts.map((post, index) => (
               <Post key={index} post={post} />
             ))}
