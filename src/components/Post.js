@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import React from "react";
 
 const Post = ({ post }) => {
@@ -8,10 +9,14 @@ const Post = ({ post }) => {
   return (
     <div className="post-card flex-container">
       <div className="card-header grid">
+      <NavLink to={`/profiles/${post.profile.id}`}>
         <div className="header-img-container flex-container">
           <img className="card-header-img" src={post.profile.profile_pic} alt="Profile" />
         </div>
-        <span className="card-title">{post.profile.name}</span>
+        </NavLink>
+        <NavLink to={`/profiles/${post.profile.id}`}>
+          <span className="card-title">{post.profile.name}</span>
+        </NavLink>
         <span className="card-subtitle">{post.profile.bio}</span>
         <div className="card-opt-btn flex-container"><i className="bi bi-three-dots"></i></div>
       </div>
@@ -40,7 +45,10 @@ const Post = ({ post }) => {
           <ul className="comments">
             {post.comments?.map((x, idx) => (
               <li className="active" key={idx}>
-                <strong>{x.commenter_name}:</strong> {x.body}
+                <NavLink to={`/profiles/${x.commenter_id}`}>
+                  <strong>{x.commenter_name}:</strong>
+                  </NavLink> 
+                  {x.body}
               </li>
             ))}
           </ul>
