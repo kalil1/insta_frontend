@@ -1,10 +1,53 @@
+import { createConsumer } from "@rails/actioncable";
+import React, { useState, useEffect } from "react";
 import { NavLink } from 'react-router-dom';
-import React from "react";
+import axios from "axios";
 
 const Post = ({ post }) => {
-  if (!post || !post.profile) {
-    return <div>Loading...</div>; // or return nothing/null
-  }
+  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState(post.comments || []);
+
+  useEffect(() => {
+    const cableConnection = createConsumer(`${process.env.REACT_APP_API_URL}/cable`);
+  
+    const subscription = cableConnection.subscriptions.create(
+      { channel: "CommentChannel", post_id: post.id },
+      {
+        received: (data) => {
+          const newComment = {
+            body: data.body,
+            commenter_name: data.commenter_name,
+            commenter_id: data.commenter_id,
+            profile: data.profile,
+          };
+          setComments((prev) => [...prev, newComment]);
+        },
+      }
+    );
+  
+    return () => {
+      subscription.unsubscribe();
+      cableConnection.disconnect(); 
+    };
+  }, [post.id]);
+
+  const handleCommentChange = (e) => setComment(e.target.value);
+
+  const handleSubmitComment = async () => {
+    if (!comment.trim()) return;
+
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/comments`, {
+        body: comment,
+        post_id: post.id,
+        profile_id: 1, // hard coding this for now
+      });
+
+      setComment(""); 
+    } catch (error) {
+      console.error("Comment submission failed", error);
+    }
+  };
 
   return (
     <div className="post-card flex-container">
@@ -34,7 +77,7 @@ const Post = ({ post }) => {
         </div>
 
         <span className="bold card-text">
-          Likes: {post.likes} Comments: {post.comments?.length || 0}
+          Likes: {post.likes} Comments: {comments.length}
         </span>
 
         <span className="card-text">
@@ -43,26 +86,31 @@ const Post = ({ post }) => {
 
         <div className="comments-wrapper">
           <ul className="comments">
-            {post.comments?.map((x, idx) => (
+            {comments.map((x, idx) => (
               <li className="active" key={idx}>
                 <NavLink to={`/profiles/${x.commenter_id}`}>
                   <strong>{x.commenter_name}:</strong>
-                  </NavLink> 
-                  {x.body}
-              </li>
+                </NavLink> 
+                {x.body}
+            </li>
             ))}
           </ul>
         </div>
 
-        <span className="card-text comments-btn">See more comments</span>
-        <span className="card-time"></span>
-
         <div className="add-comment-container flex-container">
           <span className="card-icon"><i className="bi bi-emoji-smile"></i></span>
           <div className="comment-container">
-            <input className="comment-input" type="text" placeholder="Add a comment...." />
+            <input
+              className="comment-input"
+              type="text"
+              placeholder="Add a comment..."
+              value={comment}
+              onChange={handleCommentChange}
+            />
           </div>
-          <a href="#" className="publish">Publish</a>
+          <a href="#" className="publish" onClick={(e) => { e.preventDefault(); handleSubmitComment(); }}>
+            Publish
+          </a>
         </div>
       </div>
     </div>
