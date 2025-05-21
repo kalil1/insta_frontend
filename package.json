@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@rails/actioncable": "^8.0.200",
     "@reduxjs/toolkit": "^1.8.5",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^11.2.7",
