@@ -1,3 +1,4 @@
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { createConsumer } from "@rails/actioncable";
 import React, { useState, useEffect } from "react";
 import { NavLink } from 'react-router-dom';
@@ -6,6 +7,9 @@ import axios from "axios";
 const Post = ({ post }) => {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState(post.comments || []);
+  const [liked, setLiked] = useState(post.status);
+  const [likes, setLikes] = useState(post.likes || 0);
+  const currentProfileId = 1; 
 
   useEffect(() => {
     const cableConnection = createConsumer(`${process.env.REACT_APP_API_URL}/cable`);
@@ -30,6 +34,33 @@ const Post = ({ post }) => {
       cableConnection.disconnect(); 
     };
   }, [post.id]);
+
+  const handleLike = async () => {
+    try {
+      if (!liked) {
+        await axios.post(`${process.env.REACT_APP_API_URL}/like`, {
+          union: {
+            user1: 1,
+            postid: post.id,
+            union_type: "like"
+          }
+        });
+        setLiked(true);
+        setLikes((prev) => prev + 1);
+      } else {
+        await axios.post(`${process.env.REACT_APP_API_URL}/unlike`, {
+          union: {
+            user1: 1,
+            postid: post.id,
+          }
+        });
+        setLiked(false);
+        setLikes((prev) => Math.max(prev - 1, 0)); // prevent negative likes
+      }
+    } catch (error) {
+      console.error("Failed to toggle like", error);
+    }
+  };
 
   const handleCommentChange = (e) => setComment(e.target.value);
 
@@ -70,14 +101,16 @@ const Post = ({ post }) => {
 
       <div className="card-data flex-container">
         <div className="card-icons flex-container">
-          <span className="card-icon card-icon-left"><i className="bi bi-heart"></i></span>
+          <span className="card-icon card-icon-left" onClick={handleLike}>
+            <i className={`bi ${liked ? "bi-heart-fill" : "bi-heart"}`}></i>
+          </span>
           <span className="card-icon card-icon-left"><i className="bi bi-chat"></i></span>
           <span className="card-icon card-icon-left"><i className="bi bi-send"></i></span>
           <span className="card-icon card-icon-right"><i className="bi bi-bookmark"></i></span>
         </div>
 
         <span className="bold card-text">
-          Likes: {post.likes} Comments: {comments.length}
+          Likes: {likes} Comments: {comments.length}
         </span>
 
         <span className="card-text">
