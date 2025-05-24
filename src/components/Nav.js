@@ -97,7 +97,7 @@ const Nav = () => {
               <NavLink to="/" exact="true">Home<i className="bi bi-house-door-fill"></i></NavLink>
             </li>
             <li className="navbar-item">
-              <NavLink to="/posts">Explore Page<i className="bi bi-send"></i></NavLink>
+              <NavLink to="/posts">Explore Page<i className="bi bi-compass"></i></NavLink>
             </li>
             <li className="navbar-item">
               {profileData && (
