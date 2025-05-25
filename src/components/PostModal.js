@@ -27,12 +27,12 @@ const PostModal = ({ post, onClose }) => {
   
     // Show nothing if no post selected at all
     if (!post) return null;
-
+    // console.log("MM:" + JSON.stringify(post))
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}>×</button>
-        <Post post={fetchedPost} />
+        <Post post={fetchedPost || post} />
       </div>
     </div>
   );
