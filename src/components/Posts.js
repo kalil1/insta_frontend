@@ -21,7 +21,6 @@ const Posts = () => {
   };
 
   const handleImageClick = (post) => {
-    console.log(post)
     setSelectedPost(post);
   };
 
