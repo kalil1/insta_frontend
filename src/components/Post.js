@@ -5,8 +5,7 @@ import { NavLink } from 'react-router-dom';
 import axios from "axios";
 
 const Post = ({ post }) => {
-    console.log(post)
-    const [comment, setComment] = useState("");
+  const [comment, setComment] = useState("");
   const [comments, setComments] = useState(post.comments || []);
   const [liked, setLiked] = useState(post.status);
   const [likes, setLikes] = useState(post.likes || 0);
