@@ -49,7 +49,7 @@ const Nav = () => {
   };
 
   return (
-    <header className="grid main-header">
+    <header className="grid navynav main-header">
       <div className="flex-container header-container">
         <span className="logo logo-nav header-item">Lategram</span>
 
