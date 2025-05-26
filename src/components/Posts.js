@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Profile.module.css';
 import axios from 'axios';
+import PostModal from './PostModal'; 
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
+  const [selectedPost, setSelectedPost] = useState(null);
 
   useEffect(() => {
     getPosts();
@@ -18,6 +20,14 @@ const Posts = () => {
     }
   };
 
+  const handleImageClick = (post) => {
+    setSelectedPost(post);
+  };
+
+  const closeModal = () => {
+    setSelectedPost(null);
+  };
+
   return (
     <div>
       <div className="masonry-layout">
@@ -28,7 +38,7 @@ const Posts = () => {
           const commentCount = post.comments && post.comments.length ? post.comments.length : 0;
 
           return (
-            <div className="masonry-item position-relative" key={post.id}>
+            <div className="masonry-item position-relative" key={post.id} onClick={() => handleImageClick(post)}>
               <img
                 src={post.post_img || fallbackImage}
                 alt={post.caption}
@@ -56,6 +66,7 @@ const Posts = () => {
             </div>
           );
         })}
+      <PostModal post={selectedPost} onClose={closeModal} />
       </div>
       <div className={styles["user-loader"]}>
       <div className={styles.loader}>
