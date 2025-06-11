@@ -36,6 +36,12 @@ const Post = ({ post }) => {
     };
   }, [post.id]);
 
+  const handleFocusCommentInput = () => {
+    if (commentInputRef.current) {
+      commentInputRef.current.focus();
+    }
+  };
+
   const handleLike = async () => {
     try {
       if (!liked) {
