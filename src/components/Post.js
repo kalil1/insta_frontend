@@ -1,6 +1,6 @@
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { createConsumer } from "@rails/actioncable";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from 'react-router-dom';
 import axios from "axios";
 
@@ -9,6 +9,7 @@ const Post = ({ post }) => {
   const [comments, setComments] = useState(post.comments || []);
   const [liked, setLiked] = useState(post.status);
   const [likes, setLikes] = useState(post.likes || 0);
+  const commentInputRef = useRef(null);
   const currentProfileId = 1; 
 
   useEffect(() => {
@@ -34,6 +35,12 @@ const Post = ({ post }) => {
       cableConnection.disconnect(); 
     };
   }, [post.id]);
+
+  const handleFocusCommentInput = () => {
+    if (commentInputRef.current) {
+      commentInputRef.current.focus();
+    }
+  };
 
   const handleLike = async () => {
     try {
@@ -104,7 +111,7 @@ const Post = ({ post }) => {
           <span className="card-icon card-icon-left" onClick={handleLike}>
             <i className={`bi ${liked ? "bi-heart-fill" : "bi-heart"}`}></i>
           </span>
-          <span className="card-icon card-icon-left"><i className="bi bi-chat"></i></span>
+          <span className="card-icon card-icon-left" onClick={handleFocusCommentInput}><i className="bi bi-chat"></i></span>
           <span className="card-icon card-icon-left"><i className="bi bi-send"></i></span>
           <span className="card-icon card-icon-right"><i className="bi bi-bookmark"></i></span>
         </div>
@@ -139,6 +146,7 @@ const Post = ({ post }) => {
               placeholder="Add a comment..."
               value={comment}
               onChange={handleCommentChange}
+              ref={commentInputRef}
             />
           </div>
           <a href="#" className="publish" onClick={(e) => { e.preventDefault(); handleSubmitComment(); }}>
