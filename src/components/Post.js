@@ -111,7 +111,7 @@ const Post = ({ post }) => {
           <span className="card-icon card-icon-left" onClick={handleLike}>
             <i className={`bi ${liked ? "bi-heart-fill" : "bi-heart"}`}></i>
           </span>
-          <span className="card-icon card-icon-left"><i className="bi bi-chat"></i></span>
+          <span className="card-icon card-icon-left" onClick={handleFocusCommentInput}><i className="bi bi-chat"></i></span>
           <span className="card-icon card-icon-left"><i className="bi bi-send"></i></span>
           <span className="card-icon card-icon-right"><i className="bi bi-bookmark"></i></span>
         </div>
