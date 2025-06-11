@@ -146,6 +146,7 @@ const Post = ({ post }) => {
               placeholder="Add a comment..."
               value={comment}
               onChange={handleCommentChange}
+              ref={commentInputRef}
             />
           </div>
           <a href="#" className="publish" onClick={(e) => { e.preventDefault(); handleSubmitComment(); }}>
