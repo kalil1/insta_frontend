@@ -9,6 +9,7 @@ const Post = ({ post }) => {
   const [comments, setComments] = useState(post.comments || []);
   const [liked, setLiked] = useState(post.status);
   const [likes, setLikes] = useState(post.likes || 0);
+  const commentInputRef = useRef(null);
   const currentProfileId = 1; 
 
   useEffect(() => {
