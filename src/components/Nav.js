@@ -90,10 +90,14 @@ const Nav = () => {
           <i className="far fa-heart">
             <div className="notification-bubble-wrapper">
               <div className="notification-bubble">
-                <span className="notification-count">99</span>
+                <span className="notification-count">Fake</span>
               </div>
             </div>
           </i>
+        </a>
+        
+        <a className="navigation-link notifica">
+          <i className="fa fa-plus-square-o"></i>
         </a>
 
         {profileData && (
