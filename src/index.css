@@ -545,7 +545,7 @@ background-image: linear-gradient(315deg, #fce043 0%, #fb7ba2 74%);
   
 }
 
-@media all and (max-width: 550px){
+@media all and (max-width: 650px){
   .navynav{
     display: none;
   }
