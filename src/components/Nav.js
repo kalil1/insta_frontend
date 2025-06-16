@@ -66,7 +66,7 @@ const Nav = () => {
         {searchResults.length > 0 && (
           <div className="search-container">
             <div className="search-container-box">
-              <div className="search-results">
+              <div className="search-results-dropdown">
                 {searchResults.map((profile) => (
                   <div key={profile.id}>
                     <NavLink to={`/profiles/${profile.id}`}>
