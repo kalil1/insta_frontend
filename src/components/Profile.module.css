@@ -267,6 +267,9 @@ body {
   .user-info {
     font-size: 1em;
   }
+  .profile-wrapper {
+    padding: 0%;
+  }
   }
 .image-wrapper {
   width: 100%;
@@ -455,7 +458,7 @@ body {
     margin: 0 0.5em;
   }
   .user-page-inner {
-    width: 90%;
+    width: 100%;
     grid-column-gap: 1.25em;
     grid-row-gap: 1.25em;
   }
@@ -479,10 +482,13 @@ body {
     margin: 0 0.25em;
   }
   .user-page-inner {
-    grid-column-gap: 1em;
-    grid-row-gap: 1em;
+    grid-column-gap: 0;
+    grid-row-gap: 0;
   }
   .img-btns {
     font-size: 0.8em;
+  }
+  .user-loader {
+    display: none;
   }
 }
