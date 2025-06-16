@@ -152,7 +152,7 @@ header{
   text-align: center;
 }
 
-@media only screen and (min-width: 320px) and (max-width: 650px) {
+@media only screen and (min-width: 200px) and (max-width: 650px) {
   .navigation {
     padding: 0 20px;
     justify-content: space-between;
@@ -162,8 +162,12 @@ header{
     display: none;
   }
 
+  .logo {
+    display: none;
+  }
+
   .navigation-icons {
-    display: flex;
+    display: contents;
   }
 }
 .searchbar{
