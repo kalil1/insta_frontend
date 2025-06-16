@@ -169,6 +169,10 @@ header{
   .navigation-icons {
     display: contents;
   }
+
+  .navigation-icons i {
+    font-size: 33px;
+  }
 }
 .searchbar{
   flex-shrink: 1.2;
