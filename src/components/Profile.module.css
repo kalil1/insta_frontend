@@ -121,7 +121,7 @@ body {
   border: 0.3em solid var(--grey);
   object-fit: cover;
   border-radius: 50%;
-  z-index: 2;
+  z-index: 1;
 }
 .gradient {
   width: 100%;
@@ -258,7 +258,19 @@ body {
 .profile-wrapper {
   padding: 5%;
 }
-
+@media only screen and (min-width: 650px) and (max-width: 1200px) {
+  .profile-wrapper {
+    margin-top: 5%;
+  }
+}
+@media only screen and (min-width: 200px) and (max-width: 650px) {
+  .user-info {
+    font-size: 1em;
+  }
+  .profile-wrapper {
+    padding: 0%;
+  }
+  }
 .image-wrapper {
   width: 100%;
   height: 100%;
@@ -446,7 +458,7 @@ body {
     margin: 0 0.5em;
   }
   .user-page-inner {
-    width: 90%;
+    width: 100%;
     grid-column-gap: 1.25em;
     grid-row-gap: 1.25em;
   }
@@ -470,10 +482,13 @@ body {
     margin: 0 0.25em;
   }
   .user-page-inner {
-    grid-column-gap: 1em;
-    grid-row-gap: 1em;
+    grid-column-gap: 0;
+    grid-row-gap: 0;
   }
   .img-btns {
     font-size: 0.8em;
+  }
+  .user-loader {
+    display: none;
   }
 }
