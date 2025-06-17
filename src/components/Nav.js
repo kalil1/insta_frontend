@@ -51,7 +51,7 @@ const Nav = () => {
   return (
     <div className="navigation">
       <div className="logo">
-        <NavLink className="no-underline" to="/">Instagram</NavLink>
+        <NavLink className="no-underline" to="/">InstaClone</NavLink>
       </div>
 
       <div className="navigation-search-container">
