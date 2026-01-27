@@ -22,6 +22,7 @@ function Profile() {
       if (response.data && response.data.profile) {
         setProfileData(response.data.profile);
         setPosts(response.data.posts);
+        console.log("profile posts:", response.data.posts)
       }
     } catch (error) {
       console.error("Failed to fetch profile:", error);
@@ -45,7 +46,7 @@ function Profile() {
   };
 
   const profile = profileData || fallbackProfile;
-  
+  console.log("profile:", profile)
   return (
     <div className={styles["profile-wrapper"]}>
       <div>
